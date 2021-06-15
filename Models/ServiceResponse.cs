@@ -12,9 +12,5 @@ namespace project.Models
         public bool Success { get; set; } = true;
         public string Message { get; set; } = null;
 
-        //public static implicit operator ServiceResponse<T>(ServiceResponse<GetCharacterDto> v)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using project.Dtos.Character;
+using project.Dtos.skill;
+using project.Dtos.Weapon;
 using project.Models;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,10 @@ namespace project
     {
         public AutoMapperProfile()
         {
-            CreateMap<Character, GetCharacterDto>();
+            CreateMap<Character, GetCharacterDto>().ForMember(dto=>dto.Skills, c=>c.MapFrom(s=>s.CharacterSkills.Select(cs=>cs.Skill)));
             CreateMap<AddCharacterDto, Character>();
+            CreateMap<Weapon, GetWeaponDto>();
+            CreateMap<Skill, GetSkillDto>();
         }
     }
 }

@@ -19,5 +19,8 @@ namespace project.Models
         [ForeignKey("User")]
         public int? UserId { get; set; }
         public User User { get; set; }
+        public Weapon Weapon { get; set; }
+        public List<CharacterSkill> CharacterSkills { get; set; } = new List<CharacterSkill>();
+
     }
 }
