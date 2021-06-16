@@ -17,6 +17,9 @@ using project.Data;
 using project.Services.CharacterService;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using project.Services.WeaponService;
+using project.Services.CharacterSkillService;
 
 namespace project
 {
@@ -38,6 +41,10 @@ namespace project
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IAuthrepository, AuthRepository>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IWeaponService, WeaponService>();
+            services.AddScoped<ICharacterSkillService, CharacterSkillService>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -53,6 +60,7 @@ namespace project
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "project", Version = "v1" });
             });
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

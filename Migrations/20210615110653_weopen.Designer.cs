@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project.Data;
 
 namespace project.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210615110653_weopen")]
+    partial class weopen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,39 +56,6 @@ namespace project.Migrations
                     b.ToTable("characters");
                 });
 
-            modelBuilder.Entity("project.Models.CharacterSkill", b =>
-                {
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CharacterId", "SkillId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("characterSkills");
-                });
-
-            modelBuilder.Entity("project.Models.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Damage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skills");
-                });
-
             modelBuilder.Entity("project.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -115,7 +84,7 @@ namespace project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CharacterId")
+                    b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
                     b.Property<int>("Damage")
@@ -127,8 +96,7 @@ namespace project.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CharacterId")
-                        .IsUnique()
-                        .HasFilter("[CharacterId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Weapons");
                 });
@@ -142,44 +110,20 @@ namespace project.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("project.Models.CharacterSkill", b =>
-                {
-                    b.HasOne("project.Models.Character", "Character")
-                        .WithMany("CharacterSkills")
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("project.Models.Skill", "Skill")
-                        .WithMany("CharacterSkills")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Character");
-
-                    b.Navigation("Skill");
-                });
-
             modelBuilder.Entity("project.Models.Weapon", b =>
                 {
                     b.HasOne("project.Models.Character", "Character")
                         .WithOne("Weapon")
-                        .HasForeignKey("project.Models.Weapon", "CharacterId");
+                        .HasForeignKey("project.Models.Weapon", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Character");
                 });
 
             modelBuilder.Entity("project.Models.Character", b =>
                 {
-                    b.Navigation("CharacterSkills");
-
                     b.Navigation("Weapon");
-                });
-
-            modelBuilder.Entity("project.Models.Skill", b =>
-                {
-                    b.Navigation("CharacterSkills");
                 });
 
             modelBuilder.Entity("project.Models.User", b =>

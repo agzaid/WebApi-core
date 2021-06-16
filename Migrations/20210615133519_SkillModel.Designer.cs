@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project.Data;
 
 namespace project.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210615133519_SkillModel")]
+    partial class SkillModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,13 +58,18 @@ namespace project.Migrations
 
             modelBuilder.Entity("project.Models.CharacterSkill", b =>
                 {
-                    b.Property<int>("CharacterId")
+                    b.Property<int>("CaharacterId")
                         .HasColumnType("int");
 
                     b.Property<int>("SkillId")
                         .HasColumnType("int");
 
-                    b.HasKey("CharacterId", "SkillId");
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CaharacterId", "SkillId");
+
+                    b.HasIndex("CharacterId");
 
                     b.HasIndex("SkillId");
 
@@ -146,9 +153,7 @@ namespace project.Migrations
                 {
                     b.HasOne("project.Models.Character", "Character")
                         .WithMany("CharacterSkills")
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CharacterId");
 
                     b.HasOne("project.Models.Skill", "Skill")
                         .WithMany("CharacterSkills")
